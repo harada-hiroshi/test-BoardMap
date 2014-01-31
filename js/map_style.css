@@ -87,63 +87,45 @@ font-size:16px;
 	width:200px;
 }
 
+.btn.comp.selected {
+    background: #44f186;
+}
 /******構造*******/
 BODY{
 margin:0;
 padding:0;
 background-color:#FFF;
-background-image:url('map_header_bg.gif');
 background-repeat:repeat-x;
 }
-/**ロード中ダイアログ**/
-#waiting,#waiting .info,#waiting .bg{
-position:absolute;
-top:0;left:0;
-width:100%;
-height:100%;
+
+
+/*ヘッダー領域*/
+#header{
+    margin: 0;
+    padding: 8px;
+    text-align: center;
+    background-color: #666666;
 }
-#waiting{
-z-index:1100;
-display:none;	
+
+#header a{
+margin: 0 8px;
 }
-#waiting .info{
-z-index:2;
-}
-#waiting .inner{
-position: relative;
-border:2px solid #666;
-font-size:14px;
-font-weight:bold;
-color:#333;
-background-color:#fff;
-margin: auto;
-width: 200px;
-height: 60px;
-top: 40%;
-text-align: center;
-line-height: 60px;	
-}
-#waiting .bg{
-z-index:1;
-background-color:#666;
-filter: alpha(opacity=50);
--moz-opacity:0.5;
-opacity:0.5;
-}
-/****/
+
+/**パネル**/
 #float_panel{
     position: absolute;
     z-index: 1000;
-    top: 140px;
+    top: 60px;
     width: 90%;
+    /*height: 80%;*/
     margin: 0;
     padding: 6px 10px;
     background-color: #FFF;
+    overflow: hidden;
     display: block;
     border: 1px solid #666;
     border-radius: 10px;
     box-shadow: 2px 2px 3px #666;
-    -webkit-box-shadow: 2px 2px 3px #666;
     display: none;
 }
 
@@ -161,32 +143,35 @@ opacity:0.5;
     list-style: none;
     margin: 8px 0px;
 }
-
-#header{
-width: 1100px;
-height: 30px;
-margin:0;
-padding: 2px;
-
-position: absolute;
-top: 0px;
-left: 0;
-background-image:url('map_header.gif');
-background-repeat:no-repeat;
+/*検索パネル*/
+#search{
+    min-height: 100px;
 }
-#print_header{
-	display:none;
+/*ブックマークパネル*/
+#bookmark{
+/*    min-height: 100px;
+    overflow: hidden;*/
 }
+#bookmark_list{
+    border: 1px solid #A0A0A0;
+    overflow-y: scroll;
+    margin: 0;
+    max-height: 400px;
+    min-height: 100px;
+}
+
+
+
 
 #map_wrap{
 overflow:hidden;
 }
 
 #map_canvas{
-width:660px;
+/*width:660px;
 height:550px;
 position:absolute;
-top:34px;left:0;
+top:34px;left:0;*/
 }
 
 #right_wrap{
@@ -196,18 +181,7 @@ top:34px;left:661px;
 /*right:1px;*/
 
 }
-/**コンテキストメニュー***/
-/*外枠　ヒットエリアなので何も入れない*/
-#context{
-}
-#context div{
-cursor:pointer;
-background-color: #EEC;
-border: 1px solid #666;
-padding: 4px;
-font-size: 12px;
-font-weight: bold;
-}
+
 /********コントロール**********/
 /*閉じるボタン*/
 #float_panel .close_b{
@@ -227,41 +201,6 @@ div.box{
 .bottom_border{
 border-bottom: 1px solid #aaa;
 padding-bottom: 4px;
-}
-
-
-
-/*ヘッダー**/
-#header .select_area_b{
-margin-left: 50px;
-}
-#header .select_search_b{
-margin-left: 5px;
-}
-#header .print_b{
-margin-left: 5px;
-}
-#header .show_lable_b{
-margin-left: 15px;
-}
-#header .show_dist_b,
-#header .show_kuwake_b{
-margin-left: 3px;
-}
-
-#header .param_reset{
-margin-left: 15px;
-}
-
-#header .b_map_info{
-	margin: 0 0 0 15px;
-}
-#header .b_map_pdf_s{
-	margin: 0 0 0 4px;
-}
-#header .b_map_pdf_s img,
-#header .b_map_info img{
-	vertical-align: middle;
 }
 
 

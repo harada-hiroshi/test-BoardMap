@@ -5,12 +5,10 @@ DEBUG_PROXY=true;
 PROXY_URL="ba-simple-proxy.php";
 
 API_KEY="2a78b1a65702832d27b817a908b42f227f8dc377";//todo::APIキー 最終はキーなしで取得出来る必要あり
-
 CAT_URL="http://beta.shirasete.jp/projects/ieiri-poster/issue_categories.json";
 ISSU_URL="http://beta.shirasete.jp/projects/ieiri-poster/issues.json";
 
-
-
+var currentInfoWindow;
 
 $(function() {
 	initialize(35.69623329057935,139.70226834829097,13);
@@ -32,7 +30,7 @@ function initialize(plat,plng,zoom) {
 		zoom: zoom,
 		center: new google.maps.LatLng(plat,plng),
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
-		disableDoubleClickZoom:true,//ダブルクリックによるズームと中央揃えを無効
+		//disableDoubleClickZoom:true,//ダブルクリックによるズームと中央揃えを無効
 		maxZoom:19,
 		minZoom:9
 	};
@@ -44,7 +42,6 @@ function initialize(plat,plng,zoom) {
 
 	//大行政区選択プルダウン
     var op=$('<select/>');
-    //todo::行政区ロード先
     if(DEBUG_PROXY){
         $.getJSON(PROXY_URL,{'url':CAT_URL+'?key='+API_KEY},cb);
     }else{
@@ -78,23 +75,34 @@ function initialize(plat,plng,zoom) {
 		if (timer){clearTimeout(timer);}; 	
 		timer = setTimeout(re_size_window_comp, 500);
 	});
+
 	//地図データ変更
-	$(document).bind("on_map_data_change",map_data_change);
-	
+	//$(document).bind("on_map_data_change", function(){});
+
+    //センター移動
+    //google.maps.event.addListener(map, 'center_changed', function() {})
+    //クリック
+    google.maps.event.addListener(map, 'click', function() {
+        //吹き出しを閉じる
+        if(currentInfoWindow){
+            currentInfoWindow.close();
+        }
+    })
+
 	//ズーム変更
-	google.maps.event.addListener(map, 'zoom_changed', map_zoom_changed);
+	google.maps.event.addListener(map, 'zoom_changed', function(){});
 	//ドラッグ移動終了　
 	google.maps.event.addListener(map, 'dragend',function(){
 		//ドラッグ移動終了＞画面停止イベント ドラッグ終了後の「idle」にバインド
 		google.maps.event.addListenerOnce(map, 'idle', function(){
-			map_dragend();
+			//map_dragend();
 		});	
 	});
-	//初期化完了時に1度だけエリアデータロード
+	//APP初期化完了時イベント
 	google.maps.event.addListener(map, 'projection_changed', function(){
 		google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
-			//m_map_data_manager.get_new_area();
-		});	
+            //
+		});
 	});
 
 	////コンテンツ初期化//////////////////////////////////////////
@@ -125,24 +133,8 @@ function re_size_window_comp(){
 	google.maps.event.trigger(map, 'resize');
 }
 
-/**
- * 地図ズームイベント
- */
-function map_zoom_changed() {
-}
-
-/**
- * 地図ドラッグ完了イベント
- */
-function map_dragend(){
-}
 
 
-/**
- * 地図データ変更
- */
-function map_data_change(){
-}
 
 
 //=============================================================================
@@ -217,10 +209,49 @@ function hide_float_panel(){
     $("#float_panel").hide();
 
 }
+/**
+ * パネルの表示
+ * @param type
+ */
 function show_float_panel(type){
+    $("#float_panel > div").hide();
     $("#float_panel").show();
-}
+    //$("#"+type).show();
+    switch (type){
+        case "search":
+            $("#search").show();
+            break;
+        case "bookmark":
+            $("#bookmark").show();
+            init_book_mark();
+            break;
 
+
+    }
+
+}
+/**
+ * ブックマークの初期化
+ */
+function init_book_mark(){
+    //ブックマークの読み込み
+    var list=m_map_data_manager.get_bookmark();
+    var tb="<table>";
+    $("#bookmark_list").empty();
+    for(var i=0;i<list.length;i++){
+        tb+="<tr><td>[id:"+list[i].id+"]<br/>[date:"+list[i].add_time+"]<br/>"+list[i].description+"<br/>"+list[i].subject+"<br/>"+list[i].status.name+"<hr/></td></tr>";
+    }
+    tb+="</table>";
+    $("#bookmark_list").html(tb);
+}
+/**
+ * ブックマークの全消去
+ */
+function clear_book_mark(){
+    if(window.confirm('全て消去しますか？')){
+            m_map_data_manager.clear_bookmark();
+    }
+}
 /**
  * 読み込み中画面の表示
  */
@@ -231,4 +262,10 @@ function show_load_lock(){
 }
 function hide_load_lock(){
     $("#load_lock").fadeOut();
+}
+
+
+//ブックマーク処理
+function book_mark(tar,id){
+    var res=m_map_data_manager.tlg_bookmark(id);
 }
