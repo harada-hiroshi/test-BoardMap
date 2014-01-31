@@ -1,0 +1,280 @@
+/******cssreset*******/
+/*http://meyerweb.com/eric/thoughts/2008/01/15/resetting-again/*/
+html, body, div, span, applet, object, iframe,
+
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/******common*******/
+body *{
+font-family:"メイリオ","Meiryo",arial,"ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro",Osaka,"ＭＳ Ｐゴシック","MS PGothic",Sans-Serif;
+font-size:12px;
+color:#333;
+line-height:120%;
+}
+
+
+input, select, textarea,label {
+font-size: 15px;
+margin:0;
+padding:0;
+vertical-align: middle;
+}
+.title{
+font-weight: bold;
+font-size: 14px;
+}
+.center{
+text-align:center;
+}
+span.cfix{
+clear:both;	
+}
+span.label{
+margin: 0px 10px 0px 0;
+font-size:16px;
+}
+
+/*テキストフィールドサイズ*/
+.input_text_short{
+	width:60px;
+}
+.input_text_slm{
+	width:100px;
+}
+.input_text_mid{
+	width:200px;
+}
+
+/******構造*******/
+BODY{
+margin:0;
+padding:0;
+background-color:#FFF;
+background-image:url('map_header_bg.gif');
+background-repeat:repeat-x;
+}
+/**ロード中ダイアログ**/
+#waiting,#waiting .info,#waiting .bg{
+position:absolute;
+top:0;left:0;
+width:100%;
+height:100%;
+}
+#waiting{
+z-index:1100;
+display:none;	
+}
+#waiting .info{
+z-index:2;
+}
+#waiting .inner{
+position: relative;
+border:2px solid #666;
+font-size:14px;
+font-weight:bold;
+color:#333;
+background-color:#fff;
+margin: auto;
+width: 200px;
+height: 60px;
+top: 40%;
+text-align: center;
+line-height: 60px;	
+}
+#waiting .bg{
+z-index:1;
+background-color:#666;
+filter: alpha(opacity=50);
+-moz-opacity:0.5;
+opacity:0.5;
+}
+/****/
+#float_panel{
+    position: absolute;
+    z-index: 1000;
+    top: 140px;
+    width: 90%;
+    margin: 0;
+    padding: 6px 10px;
+    background-color: #FFF;
+    display: block;
+    border: 1px solid #666;
+    border-radius: 10px;
+    box-shadow: 2px 2px 3px #666;
+    -webkit-box-shadow: 2px 2px 3px #666;
+    display: none;
+}
+
+#float_panel .btn{
+	font-weight: bold;
+}
+#float_panel .close{
+    display: block;
+    position: absolute;
+    right: 10px;
+}
+
+#float_panel ul li{
+    display: block;
+    list-style: none;
+    margin: 8px 0px;
+}
+
+#header{
+width: 1100px;
+height: 30px;
+margin:0;
+padding: 2px;
+
+position: absolute;
+top: 0px;
+left: 0;
+background-image:url('map_header.gif');
+background-repeat:no-repeat;
+}
+#print_header{
+	display:none;
+}
+
+#map_wrap{
+overflow:hidden;
+}
+
+#map_canvas{
+width:660px;
+height:550px;
+position:absolute;
+top:34px;left:0;
+}
+
+#right_wrap{
+width: 340px;
+position:absolute;
+top:34px;left:661px;
+/*right:1px;*/
+
+}
+/**コンテキストメニュー***/
+/*外枠　ヒットエリアなので何も入れない*/
+#context{
+}
+#context div{
+cursor:pointer;
+background-color: #EEC;
+border: 1px solid #666;
+padding: 4px;
+font-size: 12px;
+font-weight: bold;
+}
+/********コントロール**********/
+/*閉じるボタン*/
+#float_panel .close_b{
+position:absolute;
+right:10px;
+top:5px;
+cursor:pointer;	
+width: 19px;
+height: 18px;
+}
+
+div.box{
+	clear:both;
+	margin:4px 4px;
+}
+/*下線付き　div.box*/
+.bottom_border{
+border-bottom: 1px solid #aaa;
+padding-bottom: 4px;
+}
+
+
+
+/*ヘッダー**/
+#header .select_area_b{
+margin-left: 50px;
+}
+#header .select_search_b{
+margin-left: 5px;
+}
+#header .print_b{
+margin-left: 5px;
+}
+#header .show_lable_b{
+margin-left: 15px;
+}
+#header .show_dist_b,
+#header .show_kuwake_b{
+margin-left: 3px;
+}
+
+#header .param_reset{
+margin-left: 15px;
+}
+
+#header .b_map_info{
+	margin: 0 0 0 15px;
+}
+#header .b_map_pdf_s{
+	margin: 0 0 0 4px;
+}
+#header .b_map_pdf_s img,
+#header .b_map_info img{
+	vertical-align: middle;
+}
+
+
+/*読み込み中*/
+#load_lock {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #666666;
+    text-align: center;
+    opacity: 0.6;
+    display: none;
+}
