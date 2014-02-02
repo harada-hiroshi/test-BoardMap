@@ -11,7 +11,8 @@
 $.m_map_data_manager = function(element, options) {
 	var plugin = this;
 	var defaults ={
-        'status_id':'open'//todo::取得モード　未貼付け close 終了 open 引数のリテラル確認
+        'status_id':'open',//todo::取得モード　未貼付け close 終了 open 引数のリテラル確認
+        'category_ids':[]
  	};
 	plugin.settings = {};
 	var $element = $(element),element = element;
@@ -23,17 +24,15 @@ $.m_map_data_manager = function(element, options) {
 	var _overlay = {};
 	var _is_show_info=false;
 	var _zoomLevel;
-    var _cat_ids={};
 	////////usr constructor//////////////
 	plugin.init = function() {
 		plugin.settings = $.extend({}, defaults, options);//デフォルト値の上書き
-		
-		//地図のzoomイベント
+        //地図のズーム時の処理
 		if(plugin.settings.map){
 			_zoomLevel=plugin.settings.map.getZoom();
 			google.maps.event.addListener(plugin.settings.map, 'zoom_changed', function(){
 				_zoomLevel = plugin.settings.map.getZoom();
-                _maker_draw();
+                plugin.set_show_info();//マーカーの表示
 			});
 		}
         //ブックマークデータをstorageから読み込み
@@ -42,51 +41,95 @@ $.m_map_data_manager = function(element, options) {
             _select_comp_list_data[i]=ls[i];
             _select_comp_list[i]=true;
         }
-        //_select_comp_list_data=(typeof ls!=null)?ls:_select_comp_list_data;
-	};
+    };
 //=============================================================================
 // public method
 //=============================================================================
 
-	/**
-	 * エリアの問い合わせ
-	 */
-	plugin.get_new_area = function(category_id){
-        _cat_ids[category_id]=true;
-		var opt = {};
-		 //センターとズーム情報取得
-		opt['zoom'] = map.getZoom();
-        if(DEBUG_PROXY){
-            $.getJSON(PROXY_URL,{'url':ISSU_URL+'?key='+API_KEY+'&status_id='+plugin.settings.status_id+'&category_id='+category_id},_receive_new_area);
-        }else{
-            $.getJSON(ISSU_URL,{'key':API_KEY,'status_id':plugin.settings.status_id,'category_id':category_id},_receive_new_area);
-        }
-	};
-	////////プロパティ/////////////
-	/**
-	 * オーバレイの取得
-	 */
-	plugin.get_overlay=function(){
-		return _overlay;
-	}
     /**
-     * ラベルの表示設定
+     * オーバレイの取得
+     */
+    plugin.get_overlay=function(){
+        return _overlay;
+    }
+    /**
+     * マーカーの表示設定
      */
     plugin.set_show_info=function(flg){
-        _is_show_info=flg;
-        _maker_draw();
+        _is_show_info=(flg==undefined)?_is_show_info:flg;
+        //ラベル表示・非表示設定（一定以下の縮尺で表示）
+        var info_sw=(_is_show_info&&(_zoomLevel >= 16))?true:false;
+        for (var i in _overlay){
+            _overlay[i].show_info(info_sw);
+        }
     }
     /**
      * ステータスの変更
      */
     plugin.set_status=function(str){
-        _map_data_clear();
         plugin.settings.status_id=str;
-        for(var i in _cat_ids){
-            plugin.get_new_area(i);
+    }
+    /**
+     * 読み込む行政区のリスト設定
+     * @param array
+     */
+    plugin.set_category_ids=function(array){
+        plugin.settings.category_ids=array;
+    }
+
+	/**
+	 * 行政区に該当する掲示板の問い合わせ
+	 */
+	plugin.load_data = function(){
+        if(!plugin.settings.category_ids.length){return;}
+        //データ更新前イベント
+        $(element).trigger("on_map_data_change_befor");
+        for(var i in plugin.settings.category_ids){
+            var category_id=plugin.settings.category_ids[i];
+            if(DEBUG_PROXY){
+                $.getJSON(PROXY_URL,{'url':ISSU_URL+'?key='+API_KEY+'&status_id='+plugin.settings.status_id+'&category_id='+category_id},_receive_new_area);
+            }else{
+                $.getJSON(ISSU_URL,{'key':API_KEY,'status_id':plugin.settings.status_id,'category_id':category_id},_receive_new_area);
+            }
+        }
+	};
+
+    /**
+     * マーカーデータのclear
+     */
+    plugin.map_data_clear=function(){
+        for(var i in _overlay){
+            var ov=_overlay[i];
+            if(ov){
+                ov.setMap(null);
+                delete _overlay[i];
+            }
+        }
+        _map_data={};
+    }
+    /**
+     * マーカー全体を表示出来るサイズにズームする
+     */
+    plugin.set_current_map_position=function(){
+        var bounds = new google.maps.LatLngBounds();
+        var map_div_size={height:map.getDiv().offsetHeight,width:map.getDiv().offsetWidth};
+        // マーカー全体を囲む矩形を算出
+        var obj_len=0;
+        for (var i in _overlay){
+            bounds.extend(_overlay[i].get_marker_position());
+            ++obj_len;
+        }
+        if(obj_len){
+            map.setCenter(bounds.getCenter());
+            map.setZoom(_getBoundsZoomLevel(bounds,map_div_size));
+        }else{
+            map.setCenter(new google.maps.LatLng(DEFAULT_LAT,DEFAULT_LNG));
+            map.setZoom(MINZOOM);
         }
 
     }
+
+
     /**
      * ブックマークの追加
      */
@@ -197,29 +240,19 @@ $.m_map_data_manager = function(element, options) {
     }
 
 	/**
-	 * エリアの受信時
-	 * @param {Object} id
+	 * マーカーデータの受信時
 	 */
 	var _receive_new_area= function(json_d){
-		_data_substitution(json_d);//データの更新
-		_map_data_draw();//描画
+		_data_substitution(json_d);
+		_map_data_draw();//マーカーの描画
+        plugin.set_current_map_position();
+        //データ更新完了イベント
+        $(element).trigger("on_map_data_change_after");
 	};
-    /**
-     * データのclear
-     */
-    var _map_data_clear=function(){
-        for(var i in _overlay){
-            var ov=_overlay[i];
-            if(ov){
-                ov.setMap(null);
-                delete _overlay[i];
-            }
-        }
-        _map_data={};
-    }
+
 	/**
-	 * データの差し替え
-	 * @param {Object} id
+	 * データの差分更新
+     * todo::API側で経度緯度で表示している地図の範囲に該当する掲示板を返せるような仕様ならば、ここを改修
 	 */
 	var _data_substitution= function(data){
         if(!data.issues){return;}
@@ -228,16 +261,20 @@ $.m_map_data_manager = function(element, options) {
             list[val.id]=val;
         });
 
-
 		//新しく追加される差分を検出
         _add_map_list=[];
         for(var i in list){
             if(!_map_data[i]){//{id番号:掲示板データ,id番号2:掲示板データ}
                 _add_map_list.push(i);
+                _map_data[i]=list[i];
             }
+
         };
 
         /*
+         //---------------------------//
+         //API側で経度緯度で該当する掲示板を返せるような仕様ならば、以下で画面外のマーカーを削除する
+         //---------------------------//
 		//削除される差分を検出（追加したdata以外の物）
 		_del_map_list=[];
 		for(var d in _map_data){
@@ -246,23 +283,29 @@ $.m_map_data_manager = function(element, options) {
 			}
 		}*/
 
-		_map_data=list;
+		//_map_data=list;
+
 	};
 
 	/**
-	 * データのからエリアを描画
+	 * 追加・削除する掲示板データを元にマーカーを追加・削除
 	 */
 	var _map_data_draw=function(){
-		//エリアの追加
 		for (var i in _add_map_list){
 			var id=_add_map_list[i];
+
 			var data=_map_data[id];
 			if(data){
 				_overlay[id]=new MapOverlay(map, data,plugin,_select_comp_list);
-			}		
+			}
+
 		}
 
-		/*//エリアの削除
+		/*
+         //---------------------------//
+         //API側で経度緯度で該当する掲示板を返せるような仕様ならば、以下で画面外のマーカーを削除する
+         //---------------------------//
+         //エリアの削除
 		for (var d in _del_map_list){
 			var id=_del_map_list[d];
 			var ov=_overlay[id];
@@ -271,33 +314,39 @@ $.m_map_data_manager = function(element, options) {
 				delete _overlay[id];
 			}		
 		}*/
-
-        _maker_draw();
+        plugin.set_show_info();
 	}
-
     /**
-     * markerの描画
+     * 矩形に収まるようにズームレベルを算出する
      */
-    var _cash_md;
-    var _maker_draw=function(){
-        var info_sw=false;
-        //ラベル表示・非表示設定（一定以下の縮尺で表示）
-        if(_is_show_info){
-            if(_zoomLevel >= 16){
-                info_sw=_is_show_info;
-            }
+    var _getBoundsZoomLevel=function(bounds, mapDim) {
+        var WORLD_DIM = { height: 256, width: 256 };
+        var ZOOM_MAX = MAXZOOM;
+
+        function latRad(lat) {
+            var sin = Math.sin(lat * Math.PI / 180);
+            var radX2 = Math.log((1 + sin) / (1 - sin)) / 2;
+            return Math.max(Math.min(radX2, Math.PI), -Math.PI) / 2;
         }
-        //if(_cash_md!=info_sw){
-            _cash_md=info_sw;
-            for (var i in _overlay){
-                _overlay[i].show_info(info_sw);
-            }
-        //}
 
+        function zoom(mapPx, worldPx, fraction) {
+            return Math.floor(Math.log(mapPx / worldPx / fraction) / Math.LN2);
+        }
+
+        var ne = bounds.getNorthEast();
+        var sw = bounds.getSouthWest();
+
+        var latFraction = (latRad(ne.lat()) - latRad(sw.lat())) / Math.PI;
+
+        var lngDiff = ne.lng() - sw.lng();
+        var lngFraction = ((lngDiff < 0) ? (lngDiff + 360) : lngDiff) / 360;
+
+        var latZoom = zoom(mapDim.height, WORLD_DIM.height, latFraction);
+        var lngZoom = zoom(mapDim.width, WORLD_DIM.width, lngFraction);
+        var r=Math.min(latZoom, lngZoom, ZOOM_MAX);
+
+        return isNaN(r)?MINZOOM:r;
     }
-
-
-		
 //=============================================================================
 // plgin private method
 //=============================================================================		

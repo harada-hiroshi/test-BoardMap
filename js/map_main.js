@@ -7,11 +7,14 @@ PROXY_URL="ba-simple-proxy.php";
 API_KEY="2a78b1a65702832d27b817a908b42f227f8dc377";//todo::APIキー 最終はキーなしで取得出来る必要あり
 CAT_URL="http://beta.shirasete.jp/projects/ieiri-poster/issue_categories.json";
 ISSU_URL="http://beta.shirasete.jp/projects/ieiri-poster/issues.json";
-
+MAXZOOM=19;
+MINZOOM=9;
+DEFAULT_LAT=35.69623329057935;
+DEFAULT_LNG=139.70226834829097;
 var currentInfoWindow;
 
 $(function() {
-	initialize(35.69623329057935,139.70226834829097,13);
+	initialize(DEFAULT_LAT,DEFAULT_LNG,MINZOOM);
 });
 //google.maps.event.addDomListener(window, 'load', initialize);//ロード時に初期化実行
 
@@ -21,53 +24,106 @@ $(function() {
 var map;
 var m_map_data_manager;
 var geocoder;
-/**
- * コンストラクタ
- */
+
 function initialize(plat,plng,zoom) {
-	/////マップの初期化////
+	//マップ・データオブジェクトの初期化
 	var myOptions = {
 		zoom: zoom,
 		center: new google.maps.LatLng(plat,plng),
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
 		//disableDoubleClickZoom:true,//ダブルクリックによるズームと中央揃えを無効
-		maxZoom:19,
-		minZoom:9
+		maxZoom:MAXZOOM,
+		minZoom:MINZOOM,
+        //Gmapのボタン位置
+        mapTypeControl: false,
+        mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+            position: google.maps.ControlPosition.BOTTOM_CENTER
+        },
+        panControl: false,
+       /* panControlOptions: {
+            position: google.maps.ControlPosition.TOP_RIGHT
+        },*/
+        zoomControl: true,
+        zoomControlOptions: {
+            style: google.maps.ZoomControlStyle.LARGE,
+            position: google.maps.ControlPosition.LEFT_BOTTOM
+        },
+        scaleControl: false,
+        /*scaleControlOptions: {
+            position: google.maps.ControlPosition.TOP_LEFT
+        },*/
+        streetViewControl: true,
+        streetViewControlOptions: {
+            position: google.maps.ControlPosition.TOP_LEFT
+        }
 	};
-
 	map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
 	geocoder = new google.maps.Geocoder();//ジオコーダー
 	$(document).m_map_data_manager({map:map});//データ管理OBJ
 	m_map_data_manager=$(document).data('m_map_data_manager');
 
-	//大行政区選択プルダウン
-    var op=$('<select/>');
+
+    //行政区選択リスト生成
     if(DEBUG_PROXY){
         $.getJSON(PROXY_URL,{'url':CAT_URL+'?key='+API_KEY},cb);
     }else{
         $.getJSON(CAT_URL,{'key':API_KEY},cb);
     }
-
     function cb(d){
+        //行政区の移動 リスト版////////
+        var opl=$('<ul/>');
+        if(!d.issue_categories){return;}
+        $.each(d.issue_categories,function(i,val){
+            opl.append('<li><label><input type="checkbox" name="" value="'+val['id']+'" />'+val['name']+'</label></li>');
+        });
+
+        var acbtn=$('<hr/><a href="javascript:void(0);" onclick="()" class="btn center">表示</a>');
+        acbtn.bind("click",function(eve){
+            //選択した行政区のリストを生成し、行政区に該当する掲示板の問い合わせ
+            var ids=[];
+            $(':checked',opl).each(function(){
+                ids.push($(this).val());
+            });
+            m_map_data_manager.map_data_clear();
+            m_map_data_manager.set_category_ids(ids);
+            m_map_data_manager.load_data();
+        });
+
+        $('#area_list').append(opl);
+        $('#area_list').after(acbtn);
+
+
+        //行政区の移動 プルダウン版////////
+        var op=$('<select/>');
         if(!d.issue_categories){return;}
         var g=d.issue_categories;
-        op.append('<option value="">選択して下さい</option>');
+        op.append('<option value="">行政区を選択</option>');
 
         $.each(g,function(i,val){
             op.append('<option value="'+val['id']+'">'+val['name']+'</option>');
         });
+        op.bind("change",function(eve){
+            //行政区に該当する掲示板の問い合わせ
+            var category_id=$('option:selected',this).val();
+            if(category_id){
+                m_map_data_manager.map_data_clear();
+                m_map_data_manager.set_category_ids([category_id]);
+                m_map_data_manager.load_data();
+            };
+        })
+        $('#move_area_distince').empty().append(op);
     }
-	$('#move_area_distince').empty().append(op);
 
-	////イベントバインド///////////////////////////////////////////
-    //行政区プルダウン変更
-    op.change(function(){
-        t=$('option:selected',op);
-        move_area_distince(t.val(),t.text());
-    });
+    //=============================================================================
+    // イベントバインド
+    //=============================================================================
+
     //ステータス変更
     $("#move_area_status").change(function(){
-        move_area_status($("#move_area_status").val());
+        m_map_data_manager.map_data_clear();
+        m_map_data_manager.set_status($(this).val());
+        m_map_data_manager.load_data();
     });
 	//ウインドウリサイズ完了
 	var timer = null;
@@ -76,11 +132,18 @@ function initialize(plat,plng,zoom) {
 		timer = setTimeout(re_size_window_comp, 500);
 	});
 
-	//地図データ変更
-	//$(document).bind("on_map_data_change", function(){});
+	//地図データ変更完了時処理
+    $(document).bind("on_map_data_change_befor", function(){
+        show_load_lock();//読み込み中画面の表示
+    });
+    $(document).bind("on_map_data_change_after", function(){
+        hide_load_lock();//読み込み中画面の解除
+        hide_float_panel();
+    });
 
     //センター移動
     //google.maps.event.addListener(map, 'center_changed', function() {})
+
     //クリック
     google.maps.event.addListener(map, 'click', function() {
         //吹き出しを閉じる
@@ -140,24 +203,6 @@ function re_size_window_comp(){
 //=============================================================================
 // ボタン操作用
 //=============================================================================
-/**
- * エリアの移動（行政区ID）
-*/
-function move_area_distince(category_id,name){
-    //todo::現状はエリアの移動先をプルダウンの名称からジオコーディングで取得している為、精度が悪い。
-	if(!category_id){return;}
-    m_map_data_manager.get_new_area(category_id);
-
-    //地図を強制的に移動
-    $("#move_area_address").val(name);
-    move_area_address();
-}
-/**
- * ステータスの変更
- */
-function move_area_status(status){
-    m_map_data_manager.set_status(status);
-}
 
 /*
  * エリアの移動（住所）
@@ -196,12 +241,11 @@ function move_loc(){
 }
 /**
  * 詳細の表示
- */
 var tlg_show_info=false;
 function show_info(){
     tlg_show_info=!tlg_show_info;
     m_map_data_manager.set_show_info(tlg_show_info);
-}
+}*/
 /**
  * フロートパネルの表示・非表示
  */
@@ -225,10 +269,11 @@ function show_float_panel(type){
             $("#bookmark").show();
             init_book_mark();
             break;
+        case "info":
+            $("#info").show();
 
-
+            break;
     }
-
 }
 /**
  * ブックマークの初期化
@@ -253,7 +298,7 @@ function clear_book_mark(){
     }
 }
 /**
- * 読み込み中画面の表示
+ * 読み込み中画面の表示・非表示
  */
 function show_load_lock(){
     var jq_img=$("#load_lock img");

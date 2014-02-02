@@ -1,6 +1,3 @@
-/**
- * 地図データ管理
- */
 //=============================================================================
 // カスタムオーバーレイ定義（Google Maps JavaScript API V3）
 //=============================================================================
@@ -8,6 +5,7 @@
 //区分け用カスタムオーバーレイのコンストラクタ
 //MapOverlay(地図:obj,地図情報:obj,m_map_data_managerの参照)
 function MapOverlay(map,data,manager_ref,select_comp_list) {
+    this.setMap(map);//必須
     this.select_comp_list=select_comp_list;
     this.map_ = map;
     this.data_ = data;
@@ -16,7 +14,15 @@ function MapOverlay(map,data,manager_ref,select_comp_list) {
     this.info.setOptions({"disableAutoPan":true});//吹き出しを地図の中心に持ってくるか
     this.marker = new google.maps.Marker();
     this.marker_color={1:'FC7790',5:'32ceff',99:'44f186'};//1:未完了 5:完了　99:ブックマーク時のアイコン色
-    this.setMap(map);
+
+    //座標の生成（取得用に生成　marker.getPosition()ではMapOverlay.prototype.onAddが実行後でないと取得出来ないがonAddは非同期実行で取得順が保証出来ない為）
+    this.latlng=null;
+    var geo=eval("a="+this.data_.geometry);
+    if(geo.coordinates){
+        this.latlng=new google.maps.LatLng(geo.coordinates[1],geo.coordinates[0]);
+    }
+
+
 }
 //カスタムオーバーレイ継承（draw と　removeは必ず実装する）
 MapOverlay.prototype = new google.maps.OverlayView();
@@ -33,12 +39,7 @@ MapOverlay.prototype.createIco_img = function(is_select) {
 MapOverlay.prototype.onAdd = function() {
 	//KuwakeOverlayがsetMap(map)されたときに呼ばれる
     var self=this;
-
-    var geo=eval("a="+this.data_.geometry);
-    if(geo.coordinates){
-        latlng=geo.coordinates;
-    }
-    this.marker.setPosition(new google.maps.LatLng(latlng[1],latlng[0]));
+    this.marker.setPosition(this.latlng);
     this.marker.setIcon(this.createIco_img());
     this.marker.setMap(this.map_);
 
@@ -71,6 +72,15 @@ MapOverlay.prototype.refresh=function(){
     this.info.setContent( 'ID:'+id+'<br/>'+subject + '<br/>' + description+'<br/><a onclick="book_mark(this,'+id+')" class="btn comp'+(is_select?" selected":"")+'" >マーク</a>');
     this.marker.setIcon(this.createIco_img(is_select));
 }
+
+
+MapOverlay.prototype.get_marker_position=function(){
+    return this.latlng;
+}
+
+//=============================================================================
+//   プロトコル的な物（インターフェイスとでも言うのだろうか。。）
+//=============================================================================
 /*OverlayView描画処理 必須*/
 MapOverlay.prototype.draw=function(){
     //ズーム、中心位置、マップタイプが変更されたときに呼ばれる
