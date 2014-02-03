@@ -14,7 +14,7 @@ DEFAULT_LNG=139.70226834829097;
 var currentInfoWindow;
 
 $(function() {
-	initialize(DEFAULT_LAT,DEFAULT_LNG,MINZOOM);
+  initialize(DEFAULT_LAT,DEFAULT_LNG,MINZOOM);
 });
 //google.maps.event.addDomListener(window, 'load', initialize);//ロード時に初期化実行
 
@@ -26,14 +26,14 @@ var m_map_data_manager;
 var geocoder;
 
 function initialize(plat,plng,zoom) {
-	//マップ・データオブジェクトの初期化
-	var myOptions = {
-		zoom: zoom,
-		center: new google.maps.LatLng(plat,plng),
-		mapTypeId: google.maps.MapTypeId.ROADMAP,
-		//disableDoubleClickZoom:true,//ダブルクリックによるズームと中央揃えを無効
-		maxZoom:MAXZOOM,
-		minZoom:MINZOOM,
+  //マップ・データオブジェクトの初期化
+  var myOptions = {
+    zoom: zoom,
+    center: new google.maps.LatLng(plat,plng),
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    //disableDoubleClickZoom:true,//ダブルクリックによるズームと中央揃えを無効
+    maxZoom:MAXZOOM,
+    minZoom:MINZOOM,
         //Gmapのボタン位置
         mapTypeControl: false,
         mapTypeControlOptions: {
@@ -57,11 +57,11 @@ function initialize(plat,plng,zoom) {
         streetViewControlOptions: {
             position: google.maps.ControlPosition.TOP_LEFT
         }
-	};
-	map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
-	geocoder = new google.maps.Geocoder();//ジオコーダー
-	$(document).m_map_data_manager({map:map});//データ管理OBJ
-	m_map_data_manager=$(document).data('m_map_data_manager');
+  };
+  map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
+  geocoder = new google.maps.Geocoder();//ジオコーダー
+  $(document).m_map_data_manager({map:map});//データ管理OBJ
+  m_map_data_manager=$(document).data('m_map_data_manager');
 
 
     //行政区選択リスト生成
@@ -125,14 +125,14 @@ function initialize(plat,plng,zoom) {
         m_map_data_manager.set_status($(this).val());
         m_map_data_manager.load_data();
     });
-	//ウインドウリサイズ完了
-	var timer = null;
-	$(window).bind("resize",function(){
-		if (timer){clearTimeout(timer);}; 	
-		timer = setTimeout(re_size_window_comp, 500);
-	});
+  //ウインドウリサイズ完了
+  var timer = null;
+  $(window).bind("resize",function(){
+    if (timer){clearTimeout(timer);};
+    timer = setTimeout(re_size_window_comp, 500);
+  });
 
-	//地図データ変更完了時処理
+  //地図データ変更完了時処理
     $(document).bind("on_map_data_change_befor", function(){
         show_load_lock();//読み込み中画面の表示
     });
@@ -152,25 +152,25 @@ function initialize(plat,plng,zoom) {
         }
     })
 
-	//ズーム変更
-	google.maps.event.addListener(map, 'zoom_changed', function(){});
-	//ドラッグ移動終了　
-	google.maps.event.addListener(map, 'dragend',function(){
-		//ドラッグ移動終了＞画面停止イベント ドラッグ終了後の「idle」にバインド
-		google.maps.event.addListenerOnce(map, 'idle', function(){
-			//map_dragend();
-		});	
-	});
-	//APP初期化完了時イベント
-	google.maps.event.addListener(map, 'projection_changed', function(){
-		google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
+  //ズーム変更
+  google.maps.event.addListener(map, 'zoom_changed', function(){});
+  //ドラッグ移動終了　
+  google.maps.event.addListener(map, 'dragend',function(){
+    //ドラッグ移動終了＞画面停止イベント ドラッグ終了後の「idle」にバインド
+    google.maps.event.addListenerOnce(map, 'idle', function(){
+      //map_dragend();
+    });
+  });
+  //APP初期化完了時イベント
+  google.maps.event.addListener(map, 'projection_changed', function(){
+    google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
             //
-		});
-	});
+    });
+  });
 
-	////コンテンツ初期化//////////////////////////////////////////
-	//ウインドウ内地図リサイズ
-	re_size_window_comp();
+  ////コンテンツ初期化//////////////////////////////////////////
+  //ウインドウ内地図リサイズ
+  re_size_window_comp();
 
     //詳細表示ボックス選択
    // $("#show_info").eq(0).click();
@@ -184,16 +184,16 @@ function initialize(plat,plng,zoom) {
  */
 
 function re_size_window_comp(){
-	//パネル配置計算
-	var rp=$("#right_wrap").position();
-	var wh=$(window).height();
-	var ww=$(window).width();
-	var mp=$("#map_canvas").position();
+  //パネル配置計算
+  var rp=$("#right_wrap").position();
+  var wh=$(window).height();
+  var ww=$(window).width();
+  var mp=$("#map_canvas").position();
     var rl=ww-($("#right_wrap").width());
-	//var rl=ww-($("#right_wrap").width()+20);//20はスクロールバー分
-	$("#right_wrap").css({left:rl});
-	$("#map_canvas").css({width:rl,height:wh-mp.top});
-	google.maps.event.trigger(map, 'resize');
+  //var rl=ww-($("#right_wrap").width()+20);//20はスクロールバー分
+  $("#right_wrap").css({left:rl});
+  $("#map_canvas").css({width:rl,height:wh-mp.top});
+  google.maps.event.trigger(map, 'resize');
 }
 
 
@@ -208,21 +208,21 @@ function re_size_window_comp(){
  * エリアの移動（住所）
  */
 function move_area_address(){
-	var addre=$("#move_area_address").val();
+  var addre=$("#move_area_address").val();
    if(!geocoder){alert("geocoderエラー");return;}
     geocoder.geocode({ 'address': addre}, function(res, st)
     {
         if (st == google.maps.GeocoderStatus.OK) {
-			var location = res[0].geometry.location;
-			map.panTo(location);
-			hide_float_panel();
-		}else if(st ==google.maps.GeocoderStatus.INVALID_REQUEST||st ==google.maps.GeocoderStatus.ZERO_RESULTS){
-			alert("入力した住所では場所が特定出来ませんでした。\n入力した住所に間違いが無いか確認して下さい。\nまた市区町村は必ず入れて下さい。");
-		}else{
-			alert("サーバーに接続出来ません。時間をあけてから検索してみて下さい："+st);
-		}
-	});
-	
+      var location = res[0].geometry.location;
+      map.panTo(location);
+      hide_float_panel();
+    }else if(st ==google.maps.GeocoderStatus.INVALID_REQUEST||st ==google.maps.GeocoderStatus.ZERO_RESULTS){
+      alert("入力した住所では場所が特定出来ませんでした。\n入力した住所に間違いが無いか確認して下さい。\nまた市区町村は必ず入れて下さい。");
+    }else{
+      alert("サーバーに接続出来ません。時間をあけてから検索してみて下さい："+st);
+    }
+  });
+
 }
 /**
  * GPSで現在地に移動
@@ -232,6 +232,10 @@ function move_loc(){
     navigator.geolocation.watchPosition(function(pos) {
         map.panTo(new google.maps.LatLng(pos.coords.latitude,pos.coords.longitude));
         hide_load_lock();
+        m_map_data_manager.map_data_clear();
+        m_map_data_manager.set_location([pos.coords.latitude,pos.coords.longitude]);
+        m_map_data_manager.load_nearby_data();
+
     }, function(e) {
         alert("error: " + e.message  );
         hide_load_lock();
