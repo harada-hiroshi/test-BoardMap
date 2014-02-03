@@ -118,6 +118,8 @@ $.m_map_data_manager = function(element, options) {
         }
   };
 
+
+
     /**
      * マーカーデータのclear
      */
@@ -185,7 +187,9 @@ $.m_map_data_manager = function(element, options) {
         for(var i in _select_comp_list){
             delete _select_comp_list[i];
             delete _select_comp_list_data[i];
-            _overlay[i].refresh();//再描画
+            if(_overlay[i]){
+                _overlay[i].refresh();//再描画
+            }
         }
     }
     /**

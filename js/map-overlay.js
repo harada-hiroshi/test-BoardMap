@@ -69,7 +69,7 @@ MapOverlay.prototype.refresh=function(){
     var subject=this.data_.subject;
     var is_select=this.select_comp_list[id];
 
-    this.info.setContent( 'ID:'+id+'<br/>'+subject + '<br/>' + description+'<br/><a onclick="book_mark(this,'+id+')" class="btn comp'+(is_select?" selected":"")+'" >マーク</a>');
+    this.info.setContent( 'ID:'+id+'<br/>'+subject + '<br/>' + description+'<br/><a onclick="book_mark(this,'+id+')" class="btn comp'+(is_select?" selected":"")+'" >Mark</a>');
     this.marker.setIcon(this.createIco_img(is_select));
 }
 

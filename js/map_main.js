@@ -98,7 +98,7 @@ function initialize(plat,plng,zoom) {
         var op=$('<select/>');
         if(!d.issue_categories){return;}
         var g=d.issue_categories;
-        op.append('<option value="">行政区を選択</option>');
+        op.append('<option value="">地域を選択</option>');
 
         $.each(g,function(i,val){
             op.append('<option value="'+val['id']+'">'+val['name']+'</option>');
@@ -229,7 +229,7 @@ function move_area_address(){
  */
 function move_loc(){
     show_load_lock();
-    navigator.geolocation.watchPosition(function(pos) {
+    navigator.geolocation.getCurrentPosition(function(pos) {
         map.panTo(new google.maps.LatLng(pos.coords.latitude,pos.coords.longitude));
         hide_load_lock();
         m_map_data_manager.map_data_clear();
@@ -285,13 +285,21 @@ function show_float_panel(type){
 function init_book_mark(){
     //ブックマークの読み込み
     var list=m_map_data_manager.get_bookmark();
+    /*
     var tb="<table>";
     $("#bookmark_list").empty();
     for(var i=0;i<list.length;i++){
         tb+="<tr><td>[id:"+list[i].id+"]<br/>[date:"+list[i].add_time+"]<br/>"+list[i].description+"<br/>"+list[i].subject+"<br/>"+list[i].status.name+"<hr/></td></tr>";
     }
     tb+="</table>";
-    $("#bookmark_list").html(tb);
+   $("#bookmark_list").html(tb);
+    */
+
+    var str="";
+    for(var i=0;i<list.length;i++){
+        str+="[id:"+list[i].id+"]\n[date:"+list[i].add_time+"]\n"+list[i].description+"\n"+list[i].subject+"\n----------------\n";
+    }
+    $("#bookmark_list_txte").val(str);
 }
 /**
  * ブックマークの全消去
@@ -299,6 +307,7 @@ function init_book_mark(){
 function clear_book_mark(){
     if(window.confirm('全て消去しますか？')){
             m_map_data_manager.clear_bookmark();
+        $("#bookmark_list_txte").val("");
     }
 }
 /**
@@ -317,4 +326,17 @@ function hide_load_lock(){
 //ブックマーク処理
 function book_mark(tar,id){
     var res=m_map_data_manager.tlg_bookmark(id);
+}
+
+
+
+/**
+ * 地図の中心位置から近くの掲示板を取得 todo::実装検討
+ */
+function debug_get_pos(){
+  var latlng=  map.getCenter();
+    hide_load_lock();
+    m_map_data_manager.map_data_clear();
+    m_map_data_manager.set_location([latlng.lat(),latlng.lng()]);
+    m_map_data_manager.load_nearby_data();
 }
