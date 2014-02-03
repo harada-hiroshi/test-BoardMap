@@ -112,9 +112,9 @@ $.m_map_data_manager = function(element, options) {
         var loc = plugin.settings.location
         $(element).trigger("on_map_data_change_befor");
         if(DEBUG_PROXY){
-          $.getJSON(PROXY_URL,{'url':ISSU_URL+'?key='+API_KEY+'&status_id='+plugin.settings.status_id+'&sort=geom:'+loc.join(',')},_receive_new_data);
+          $.getJSON(PROXY_URL,{'url':ISSU_URL+'?key='+API_KEY+'&status_id='+plugin.settings.status_id+'&sort=geom:'+loc.join(',')},_receive_new_area);
         }else{
-          $.getJSON(ISSU_URL,{'key':API_KEY,'status_id':plugin.settings.status_id,'sort':'geom:' + loc.join(',')},_receive_new_data);
+          $.getJSON(ISSU_URL,{'key':API_KEY,'status_id':plugin.settings.status_id,'sort':'geom:' + loc.join(',')},_receive_new_area);
         }
   };
 
