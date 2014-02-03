@@ -9,32 +9,33 @@
 // 初期化　コンストラクタ
 //=============================================================================
 $.m_map_data_manager = function(element, options) {
-	var plugin = this;
-	var defaults ={
+  var plugin = this;
+  var defaults ={
         'status_id':'open',//todo::取得モード　未貼付け close 終了 open 引数のリテラル確認
-        'category_ids':[]
- 	};
-	plugin.settings = {};
-	var $element = $(element),element = element;
-	var _select_comp_list={};
+        'category_ids':[],
+        'location':[]
+   };
+  plugin.settings = {};
+  var $element = $(element),element = element;
+  var _select_comp_list={};
     var _select_comp_list_data={};
-	var _map_data={};
-	var _del_map_list=[];
-	var _add_map_list=[];
-	var _overlay = {};
-	var _is_show_info=false;
-	var _zoomLevel;
-	////////usr constructor//////////////
-	plugin.init = function() {
-		plugin.settings = $.extend({}, defaults, options);//デフォルト値の上書き
+  var _map_data={};
+  var _del_map_list=[];
+  var _add_map_list=[];
+  var _overlay = {};
+  var _is_show_info=false;
+  var _zoomLevel;
+  ////////usr constructor//////////////
+  plugin.init = function() {
+    plugin.settings = $.extend({}, defaults, options);//デフォルト値の上書き
         //地図のズーム時の処理
-		if(plugin.settings.map){
-			_zoomLevel=plugin.settings.map.getZoom();
-			google.maps.event.addListener(plugin.settings.map, 'zoom_changed', function(){
-				_zoomLevel = plugin.settings.map.getZoom();
+    if(plugin.settings.map){
+      _zoomLevel=plugin.settings.map.getZoom();
+      google.maps.event.addListener(plugin.settings.map, 'zoom_changed', function(){
+        _zoomLevel = plugin.settings.map.getZoom();
                 plugin.set_show_info();//マーカーの表示
-			});
-		}
+      });
+    }
         //ブックマークデータをstorageから読み込み
         var ls=_load_storage("bookmark");
         for(var i in ls){
@@ -77,10 +78,18 @@ $.m_map_data_manager = function(element, options) {
         plugin.settings.category_ids=array;
     }
 
-	/**
-	 * 行政区に該当する掲示板の問い合わせ
-	 */
-	plugin.load_data = function(){
+    /**
+     * 近くの掲示板の取得用ロケーション設定
+     * @param array ([lat,lng])
+     */
+    plugin.set_location=function(array){
+        plugin.settings.location=array;
+    }
+
+  /**
+   * 行政区に該当する掲示板の問い合わせ
+   */
+  plugin.load_data = function(){
         if(!plugin.settings.category_ids.length){return;}
         //データ更新前イベント
         $(element).trigger("on_map_data_change_befor");
@@ -92,7 +101,22 @@ $.m_map_data_manager = function(element, options) {
                 $.getJSON(ISSU_URL,{'key':API_KEY,'status_id':plugin.settings.status_id,'category_id':category_id},_receive_new_area);
             }
         }
-	};
+  };
+
+  /**
+   * 現在地近くの掲示板の問い合わせ
+   */
+  plugin.load_nearby_data = function(){
+        if(!plugin.settings.location.length){return;}
+        //データ更新前イベント
+        var loc = plugin.settings.location
+        $(element).trigger("on_map_data_change_befor");
+        if(DEBUG_PROXY){
+          $.getJSON(PROXY_URL,{'url':ISSU_URL+'?key='+API_KEY+'&status_id='+plugin.settings.status_id+'&sort=geom:'+loc.join(',')},_receive_new_area);
+        }else{
+          $.getJSON(ISSU_URL,{'key':API_KEY,'status_id':plugin.settings.status_id,'sort':'geom:' + loc.join(',')},_receive_new_area);
+        }
+  };
 
     /**
      * マーカーデータのclear
@@ -186,7 +210,7 @@ $.m_map_data_manager = function(element, options) {
     }
 //=============================================================================
 // private method
-//=============================================================================	
+//=============================================================================
     /**
      * 永続データの保存
      */
@@ -239,29 +263,29 @@ $.m_map_data_manager = function(element, options) {
         }
     }
 
-	/**
-	 * マーカーデータの受信時
-	 */
-	var _receive_new_area= function(json_d){
-		_data_substitution(json_d);
-		_map_data_draw();//マーカーの描画
+  /**
+   * マーカーデータの受信時
+   */
+  var _receive_new_area= function(json_d){
+    _data_substitution(json_d);
+    _map_data_draw();//マーカーの描画
         plugin.set_current_map_position();
         //データ更新完了イベント
         $(element).trigger("on_map_data_change_after");
-	};
+  };
 
-	/**
-	 * データの差分更新
+  /**
+   * データの差分更新
      * todo::API側で経度緯度で表示している地図の範囲に該当する掲示板を返せるような仕様ならば、ここを改修
-	 */
-	var _data_substitution= function(data){
+   */
+  var _data_substitution= function(data){
         if(!data.issues){return;}
         var list={};
         $.each(data.issues,function(i,val){
             list[val.id]=val;
         });
 
-		//新しく追加される差分を検出
+    //新しく追加される差分を検出
         _add_map_list=[];
         for(var i in list){
             if(!_map_data[i]){//{id番号:掲示板データ,id番号2:掲示板データ}
@@ -275,47 +299,47 @@ $.m_map_data_manager = function(element, options) {
          //---------------------------//
          //API側で経度緯度で該当する掲示板を返せるような仕様ならば、以下で画面外のマーカーを削除する
          //---------------------------//
-		//削除される差分を検出（追加したdata以外の物）
-		_del_map_list=[];
-		for(var d in _map_data){
-			if(!data[d]){
-				_del_map_list.push(d);
-			}
-		}*/
+    //削除される差分を検出（追加したdata以外の物）
+    _del_map_list=[];
+    for(var d in _map_data){
+      if(!data[d]){
+        _del_map_list.push(d);
+      }
+    }*/
 
-		//_map_data=list;
+    //_map_data=list;
 
-	};
+  };
 
-	/**
-	 * 追加・削除する掲示板データを元にマーカーを追加・削除
-	 */
-	var _map_data_draw=function(){
-		for (var i in _add_map_list){
-			var id=_add_map_list[i];
+  /**
+   * 追加・削除する掲示板データを元にマーカーを追加・削除
+   */
+  var _map_data_draw=function(){
+    for (var i in _add_map_list){
+      var id=_add_map_list[i];
 
-			var data=_map_data[id];
-			if(data){
-				_overlay[id]=new MapOverlay(map, data,plugin,_select_comp_list);
-			}
+      var data=_map_data[id];
+      if(data){
+        _overlay[id]=new MapOverlay(map, data,plugin,_select_comp_list);
+      }
 
-		}
+    }
 
-		/*
+    /*
          //---------------------------//
          //API側で経度緯度で該当する掲示板を返せるような仕様ならば、以下で画面外のマーカーを削除する
          //---------------------------//
          //エリアの削除
-		for (var d in _del_map_list){
-			var id=_del_map_list[d];
-			var ov=_overlay[id];
-			if(ov){
-				ov.setMap(null);
-				delete _overlay[id];
-			}		
-		}*/
+    for (var d in _del_map_list){
+      var id=_del_map_list[d];
+      var ov=_overlay[id];
+      if(ov){
+        ov.setMap(null);
+        delete _overlay[id];
+      }
+    }*/
         plugin.set_show_info();
-	}
+  }
     /**
      * 矩形に収まるようにズームレベルを算出する
      */
@@ -349,8 +373,8 @@ $.m_map_data_manager = function(element, options) {
     }
 //=============================================================================
 // plgin private method
-//=============================================================================		
-	plugin.init();
+//=============================================================================
+  plugin.init();
 };
  
  $.fn.m_map_data_manager = function(options) {

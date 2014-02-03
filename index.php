@@ -33,7 +33,7 @@
 <a href="javascript:void(0);" onclick="show_float_panel('bookmark')" class="btn">★マークリスト</a>
 <a href="javascript:void(0);" onclick="show_float_panel('info')" class="btn">説 明</a>
 </div>
-	<div id="float_panel">
+  <div id="float_panel">
         <a href="javascript:void(0);" onclick="hide_float_panel()" class="btn close">閉じる</a>
         <div id="search">
             <ul>
@@ -79,9 +79,9 @@
 
         </div>
     </div>
-	<div id="map_wrap" >
-	<div id="map_canvas" ></div>
-	</div>
+  <div id="map_wrap" >
+  <div id="map_canvas" ></div>
+  </div>
 <div id="load_lock"><img src="js/loading.gif" />検索中</div>
 </body>
 </html>
