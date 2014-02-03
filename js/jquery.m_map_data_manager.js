@@ -109,11 +109,12 @@ $.m_map_data_manager = function(element, options) {
   plugin.load_nearby_data = function(){
         if(!plugin.settings.location.length){return;}
         //データ更新前イベント
+        var loc = plugin.settings.location
         $(element).trigger("on_map_data_change_befor");
         if(DEBUG_PROXY){
-          $.getJSON(PROXY_URL,{'url':ISSU_URL+'?key='+API_KEY+'&status_id='+plugin.settings.status_id+'&sort=geom:'+location.join(',')},_receive_new_nearby);
+          $.getJSON(PROXY_URL,{'url':ISSU_URL+'?key='+API_KEY+'&status_id='+plugin.settings.status_id+'&sort=geom:'+loc.join(',')},_receive_new_nearby);
         }else{
-          $.getJSON(ISSU_URL,{'key':API_KEY,'status_id':plugin.settings.status_id,'sort':'geom:' + location.join(',')},_receive_new_nearby);
+          $.getJSON(ISSU_URL,{'key':API_KEY,'status_id':plugin.settings.status_id,'sort':'geom:' + loc.join(',')},_receive_new_nearby);
         }
   };
 
