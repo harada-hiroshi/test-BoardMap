@@ -112,9 +112,9 @@ $.m_map_data_manager = function(element, options) {
         var loc = plugin.settings.location
         $(element).trigger("on_map_data_change_befor");
         if(DEBUG_PROXY){
-          $.getJSON(PROXY_URL,{'url':ISSU_URL+'?key='+API_KEY+'&status_id='+plugin.settings.status_id+'&sort=geom:'+loc.join(',')},_receive_new_nearby);
+          $.getJSON(PROXY_URL,{'url':ISSU_URL+'?key='+API_KEY+'&status_id='+plugin.settings.status_id+'&sort=geom:'+loc.join(',')},_receive_new_data);
         }else{
-          $.getJSON(ISSU_URL,{'key':API_KEY,'status_id':plugin.settings.status_id,'sort':'geom:' + loc.join(',')},_receive_new_nearby);
+          $.getJSON(ISSU_URL,{'key':API_KEY,'status_id':plugin.settings.status_id,'sort':'geom:' + loc.join(',')},_receive_new_data);
         }
   };
 
@@ -270,16 +270,6 @@ $.m_map_data_manager = function(element, options) {
     _data_substitution(json_d);
     _map_data_draw();//マーカーの描画
         plugin.set_current_map_position();
-        //データ更新完了イベント
-        $(element).trigger("on_map_data_change_after");
-  };
-
-  /**
-   * マーカーデータの受信時(nearby)
-   */
-  var _receive_new_nearby= function(json_d){
-    _data_substitution(json_d);
-    _map_data_draw();//マーカーの描画
         //データ更新完了イベント
         $(element).trigger("on_map_data_change_after");
   };
