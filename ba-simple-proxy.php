@@ -7,7 +7,11 @@ ini_set( "display_errors", "Off");
 $url = $_GET['url'];
 $flag = true;
 $json = null;
+$max = 1000;
+
 while ($flag) {
+
+  if (empty($url)) { break; }
 
   $_json = json_decode(getJson($url));
   if ($json == null) {
@@ -16,7 +20,9 @@ while ($flag) {
     $json->{'issues'} = array_merge($json->{'issues'}, $_json->{'issues'});
   }
 
-  if (isset($json->{'total_count'}) && isset($json->{'issues'}) && $json->{'total_count'} > count($json->{'issues'})) {
+  if (count($json->{'issues'}) >= $max) {
+    $flag = false;
+  } else if (isset($json->{'total_count'}) && isset($json->{'issues'}) && $json->{'total_count'} > count($json->{'issues'})) {
     $url = $_GET['url'] . "&offset=" . count($json->{'issues'});
     if ($loop > 2) {
 
@@ -26,6 +32,7 @@ while ($flag) {
     $flag = false;
   }
 }
+
 print json_encode($json);
 
 function getJson($url) {
