@@ -29,7 +29,7 @@
     </ul>
 <!--<a href="javascript:void(0);" onclick="show_float_panel('search')" class="btn">一括選択</a>-->
 <!--<a href="javascript:void(0);" onclick="show_info()" class="btn ">吹出し表示</a>-->
-<a href="javascript:void(0);" onclick="move_loc()" class="btn">現在地</a>
+<a href="javascript:void(0);" onclick="move_loc()" class="btn">付近の掲示板を表示</a>
 <a href="javascript:void(0);" onclick="show_float_panel('bookmark')" class="btn">MarkList</a>
 
 <a href="javascript:void(0);" onclick="show_float_panel('info')" class="btn">説明</a>

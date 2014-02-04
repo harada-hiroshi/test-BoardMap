@@ -96,9 +96,9 @@ $.m_map_data_manager = function(element, options) {
         for(var i in plugin.settings.category_ids){
             var category_id=plugin.settings.category_ids[i];
             if(DEBUG_PROXY){
-                $.getJSON(PROXY_URL,{'url':ISSU_URL+'?key='+API_KEY+'&status_id='+plugin.settings.status_id+'&category_id='+category_id},_receive_new_area);
+                $.getJSON(PROXY_URL,{'url':ISSU_URL+'?key='+API_KEY+'&status_id='+plugin.settings.status_id+'&category_id='+category_id+'&limit=100'},_receive_new_area);
             }else{
-                $.getJSON(ISSU_URL,{'key':API_KEY,'status_id':plugin.settings.status_id,'category_id':category_id},_receive_new_area);
+                $.getJSON(ISSU_URL,{'key':API_KEY,'status_id':plugin.settings.status_id,'category_id':category_id,'limit':100},_receive_new_area);
             }
         }
   };
@@ -112,12 +112,11 @@ $.m_map_data_manager = function(element, options) {
         var loc = plugin.settings.location
         $(element).trigger("on_map_data_change_befor");
         if(DEBUG_PROXY){
-          $.getJSON(PROXY_URL,{'url':ISSU_URL+'?key='+API_KEY+'&status_id='+plugin.settings.status_id+'&sort=geom:'+loc.join(',')},_receive_new_area);
+          $.getJSON(PROXY_URL,{'url':ISSU_URL+'?key='+API_KEY+'&status_id='+plugin.settings.status_id+'&sort=geom:'+loc.join(',')+'&limit=100'},_receive_new_area);
         }else{
-          $.getJSON(ISSU_URL,{'key':API_KEY,'status_id':plugin.settings.status_id,'sort':'geom:' + loc.join(',')},_receive_new_area);
+          $.getJSON(ISSU_URL,{'key':API_KEY,'status_id':plugin.settings.status_id,'sort':'geom:' + loc.join(','),'limit':100},_receive_new_area);
         }
   };
-
 
 
     /**

@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/js/jquery.m_map_data_manager.js" line="138" mnemonic="4" />
+    <bookmark url="file://$PROJECT_DIR$/js/jquery.m_map_data_manager.js" line="137" mnemonic="4" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7982ff2-5174-4abf-993d-aa69d99d83f2" name="Default" comment="1.0&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/info.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/info.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/index.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/info.html" afterPath="$PROJECT_DIR$/info.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/jquery.m_map_data_manager.js" afterPath="$PROJECT_DIR$/js/jquery.m_map_data_manager.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/map-overlay.js" afterPath="$PROJECT_DIR$/js/map-overlay.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/map_main.js" afterPath="$PROJECT_DIR$/js/map_main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/map_style.css" afterPath="$PROJECT_DIR$/js/map_style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="map-src.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,7 +36,7 @@
       <file leaf-file-name="jquery.m_map_data_manager.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/jquery.m_map_data_manager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="122" column="7" selection-start="3656" selection-end="3656" vertical-scroll-proportion="0.0" vertical-offset="3210" max-vertical-offset="6000">
+            <state line="98" column="147" selection-start="2865" selection-end="2865" vertical-scroll-proportion="-4.1923075" vertical-offset="1361" max-vertical-offset="5985">
               <folding />
             </state>
           </provider>
@@ -51,7 +45,7 @@
       <file leaf-file-name="map-overlay.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/map-overlay.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="71" column="169" selection-start="2495" selection-end="2495" vertical-scroll-proportion="0.0" vertical-offset="1065" max-vertical-offset="1635">
+            <state line="85" column="34" selection-start="2934" selection-end="2934" vertical-scroll-proportion="0.0" vertical-offset="6" max-vertical-offset="1605">
               <folding />
             </state>
           </provider>
@@ -69,7 +63,7 @@
       <file leaf-file-name="map_main.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/map_main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="308" column="45" selection-start="9231" selection-end="9245" vertical-scroll-proportion="0.0" vertical-offset="4560" max-vertical-offset="5175">
+            <state line="308" column="45" selection-start="9231" selection-end="9245" vertical-scroll-proportion="-7.076923" vertical-offset="4406" max-vertical-offset="5175">
               <folding />
             </state>
           </provider>
@@ -78,25 +72,25 @@
       <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="90" selection-start="1856" selection-end="1856" vertical-scroll-proportion="-17.75" vertical-offset="144" max-vertical-offset="1140">
+            <state line="31" column="65" selection-start="1487" selection-end="1487" vertical-scroll-proportion="-1.875" vertical-offset="420" max-vertical-offset="1140">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="info.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="info.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/info.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="0" selection-start="517" selection-end="517" vertical-scroll-proportion="-4.375" vertical-offset="180" max-vertical-offset="1230">
+            <state line="65" column="7" selection-start="1611" selection-end="1611" vertical-scroll-proportion="0.91531533" vertical-offset="467" max-vertical-offset="1230">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="info.css" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="info.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/info.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="24" selection-start="1374" selection-end="1374" vertical-scroll-proportion="0.14634146" vertical-offset="990" max-vertical-offset="1620">
+            <state line="73" column="21" selection-start="1396" selection-end="1396" vertical-scroll-proportion="0.0" vertical-offset="880" max-vertical-offset="1620">
               <folding />
             </state>
           </provider>
@@ -131,18 +125,18 @@
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/map-overlay.js" />
         <option value="$PROJECT_DIR$/js/map_main.js" />
-        <option value="$PROJECT_DIR$/js/jquery.m_map_data_manager.js" />
         <option value="$PROJECT_DIR$/js/map_style.css" />
-        <option value="$PROJECT_DIR$/index.php" />
-        <option value="$PROJECT_DIR$/info.html" />
         <option value="$PROJECT_DIR$/info.css" />
+        <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/js/jquery.m_map_data_manager.js" />
+        <option value="$PROJECT_DIR$/info.html" />
       </list>
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="266" />
-    <option name="y" value="144" />
+    <option name="x" value="171" />
+    <option name="y" value="134" />
     <option name="width" value="1396" />
     <option name="height" value="837" />
   </component>
@@ -267,27 +261,27 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="266" y="144" width="1396" height="837" extended-state="0" />
+    <frame x="171" y="134" width="1396" height="837" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.121820614" sideWeight="0.49926144" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17001338" sideWeight="0.49926144" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2577548" sideWeight="0.83419025" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26144755" sideWeight="0.83419025" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2109375" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.121820614" sideWeight="0.50073856" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17001338" sideWeight="0.50073856" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32904884" sideWeight="0.49960846" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32904884" sideWeight="0.49960846" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -315,6 +309,55 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/js/jquery.m_map_data_manager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="122" column="7" selection-start="3656" selection-end="3656" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6000">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/map-overlay.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="71" column="169" selection-start="2495" selection-end="2495" vertical-scroll-proportion="0.0" vertical-offset="1065" max-vertical-offset="1635">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/map_style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="159" column="10" selection-start="2682" selection-end="2682" vertical-scroll-proportion="0.0" vertical-offset="2299" max-vertical-offset="4215">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/map_main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="308" column="45" selection-start="9231" selection-end="9245" vertical-scroll-proportion="0.0" vertical-offset="4620" max-vertical-offset="5205">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="90" selection-start="1856" selection-end="1856" vertical-scroll-proportion="0.0" vertical-offset="144" max-vertical-offset="1140">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/info.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="0" selection-start="517" selection-end="517" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="1230">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/info.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="72" column="24" selection-start="1374" selection-end="1374" vertical-scroll-proportion="0.0" vertical-offset="990" max-vertical-offset="1620">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/jquery.m_map_data_manager.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="122" column="7" selection-start="3656" selection-end="3656" vertical-scroll-proportion="0.0" vertical-offset="1830" max-vertical-offset="6000">
@@ -563,27 +606,6 @@
         <state line="8" column="0" selection-start="244" selection-end="244" vertical-scroll-proportion="0.15768725" vertical-offset="0" max-vertical-offset="2250" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/map-overlay.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="169" selection-start="2495" selection-end="2495" vertical-scroll-proportion="0.0" vertical-offset="1065" max-vertical-offset="1635">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/jquery.m_map_data_manager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="122" column="7" selection-start="3656" selection-end="3656" vertical-scroll-proportion="0.0" vertical-offset="3210" max-vertical-offset="6000">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/map_main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="308" column="45" selection-start="9231" selection-end="9245" vertical-scroll-proportion="0.0" vertical-offset="4620" max-vertical-offset="5205">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/map_style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="159" column="10" selection-start="2682" selection-end="2682" vertical-scroll-proportion="0.0" vertical-offset="2299" max-vertical-offset="4215">
@@ -591,23 +613,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/info.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="21" selection-start="1396" selection-end="1396" vertical-scroll-proportion="0.0" vertical-offset="880" max-vertical-offset="1620">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="90" selection-start="1856" selection-end="1856" vertical-scroll-proportion="-17.75" vertical-offset="144" max-vertical-offset="1140">
+        <state line="31" column="65" selection-start="1487" selection-end="1487" vertical-scroll-proportion="-1.875" vertical-offset="420" max-vertical-offset="1140">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/map-overlay.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="85" column="34" selection-start="2934" selection-end="2934" vertical-scroll-proportion="0.0" vertical-offset="6" max-vertical-offset="1605">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/map_main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="308" column="45" selection-start="9231" selection-end="9245" vertical-scroll-proportion="-7.076923" vertical-offset="4406" max-vertical-offset="5175">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/jquery.m_map_data_manager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="98" column="147" selection-start="2865" selection-end="2865" vertical-scroll-proportion="-4.1923075" vertical-offset="1361" max-vertical-offset="5985">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/info.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="517" selection-end="517" vertical-scroll-proportion="-4.375" vertical-offset="180" max-vertical-offset="1230">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/info.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="24" selection-start="1374" selection-end="1374" vertical-scroll-proportion="0.14634146" vertical-offset="990" max-vertical-offset="1620">
+        <state line="65" column="7" selection-start="1611" selection-end="1611" vertical-scroll-proportion="0.91531533" vertical-offset="467" max-vertical-offset="1230">
           <folding />
         </state>
       </provider>
