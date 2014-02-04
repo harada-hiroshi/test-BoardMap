@@ -7,7 +7,7 @@ ini_set( "display_errors", "Off");
 $url = $_GET['url'];
 $flag = true;
 $json = null;
-$max = 1000;
+$max = 200;
 
 while ($flag) {
 
