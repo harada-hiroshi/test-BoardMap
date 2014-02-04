@@ -270,6 +270,7 @@ $.m_map_data_manager = function(element, options) {
    * マーカーデータの受信時
    */
   var _receive_new_area= function(json_d){
+    console.log("issues = " + json_d.issues.length);
     _data_substitution(json_d);
     _map_data_draw();//マーカーの描画
         plugin.set_current_map_position();
