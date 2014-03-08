@@ -4,7 +4,7 @@
 DEBUG_PROXY=true;
 PROXY_URL="ba-simple-proxy.php";
 
-API_KEY="2a78b1a65702832d27b817a908b42f227f8dc377";//todo::APIキー 最終はキーなしで取得出来る必要あり
+API_KEY="API_KEY";//todo::APIキー 最終はキーなしで取得出来る必要あり
 CAT_URL="http://beta.shirasete.jp/projects/ieiri-poster/issue_categories.json";
 ISSU_URL="http://beta.shirasete.jp/projects/ieiri-poster/issues.json";
 MAXZOOM=19;
